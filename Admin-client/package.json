@@ -1,17 +1,23 @@
 {
-  "name": "client",
+  "name": "admin",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "payload": "payload",
+    "generate:importmap": "payload generate:importmap",
+    "generate:types": "payload generate:types"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "^3.88.0",
     "@payloadcms/next": "^3.88.0",
+    "@payloadcms/plugin-cloud-storage": "3.88.0",
     "@payloadcms/richtext-lexical": "^3.88.0",
+    "cloudinary": "2.10.1",
     "next": "16.3.1",
     "payload": "^3.88.0",
     "react": "19.2.8",
