@@ -1,0 +1,17 @@
+model Client {
+  id          String   @id @default(cuid())
+  name        String
+  companyName String?
+  email       String?
+  phone       String?
+  website     String?
+  logo        String?
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  projects     Project[]
+  testimonials Testimonial[]
+
+  @@map("clients")
+}

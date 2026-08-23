@@ -1,0 +1,18 @@
+model Project {
+  id           String          @id @default(cuid())
+  title        String
+  slug         String          @unique
+  description  String
+  category     ProjectCategory
+  images       String[]
+  technologies String[]
+  projectUrl   String?
+  isFeatured   Boolean         @default(false)
+  isPublished  Boolean         @default(true)
+  clientId     String?
+  client       Client?         @relation(fields: [clientId], references: [id])
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  @@map("projects")
+}

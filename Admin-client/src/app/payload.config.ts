@@ -7,6 +7,10 @@ import { postgresAdapter } from '@payloadcms/db-postgres'
 import { cloudStoragePlugin } from '@payloadcms/plugin-cloud-storage'
 import { PayloadAdmins } from '../collections/PayloadAdmins'
 import { Media } from '../collections/Media'
+import { Pages } from '../collections/Pages'
+import { Posts } from '../collections/Posts'
+import { Navigation } from '../globals/Navigation'
+import { SiteSEO } from '../globals/SiteSEO'
 import { cloudinaryAdapter } from '../lib/cloudinaryStorage'
 
 const filename = fileURLToPath(import.meta.url)
@@ -15,7 +19,17 @@ const dirname = path.dirname(filename)
 export default buildConfig({
   editor: lexicalEditor(),
 
-  collections: [PayloadAdmins, Media],
+  collections: [PayloadAdmins, Media, Pages, Posts],
+
+  globals: [Navigation, SiteSEO],
+
+  // Root-level routes remapped so Payload's built-in admin UI and REST API
+  // don't collide with the custom dashboard's `/admin/*` routes or with
+  // Nginx's `/api/*` proxy rule (which forwards to the NestJS service).
+  routes: {
+    admin: '/payload-admin',
+    api: '/payload-api',
+  },
 
   admin: {
     user: PayloadAdmins.slug,
