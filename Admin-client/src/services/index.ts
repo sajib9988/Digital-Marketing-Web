@@ -1,3 +1,4 @@
+export * as authApi from './api/auth.service'
 export * as usersApi from './api/users.service'
 export * as servicesApi from './api/services.service'
 export * as projectsApi from './api/projects.service'

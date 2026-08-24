@@ -10,14 +10,20 @@ import type { Navigation, Page, Post, SiteSeo } from '@payload-types'
 
 // ---- Pages ----
 
-export async function getPages() {
+export async function getPages(): Promise<Page[]> {
   const payload = await getPayload({ config })
-  return payload.find({ collection: 'pages', sort: '-updatedAt' })
+  const result = await payload.find({
+    collection: 'pages',
+    sort: '-updatedAt',
+    limit: 200,
+    depth: 0,
+  })
+  return result.docs
 }
 
 export async function getPageById(id: string): Promise<Page> {
   const payload = await getPayload({ config })
-  return payload.findByID({ collection: 'pages', id })
+  return payload.findByID({ collection: 'pages', id, depth: 0 })
 }
 
 export async function createPage(data: Omit<Page, 'id' | 'updatedAt' | 'createdAt'>) {
@@ -40,14 +46,20 @@ export async function deletePage(id: string) {
 
 // ---- Blog (Posts) ----
 
-export async function getPosts() {
+export async function getPosts(): Promise<Post[]> {
   const payload = await getPayload({ config })
-  return payload.find({ collection: 'posts', sort: '-updatedAt' })
+  const result = await payload.find({
+    collection: 'posts',
+    sort: '-updatedAt',
+    limit: 200,
+    depth: 0,
+  })
+  return result.docs
 }
 
 export async function getPostById(id: string): Promise<Post> {
   const payload = await getPayload({ config })
-  return payload.findByID({ collection: 'posts', id })
+  return payload.findByID({ collection: 'posts', id, depth: 0 })
 }
 
 export async function createPost(data: Omit<Post, 'id' | 'updatedAt' | 'createdAt'>) {
@@ -90,6 +102,23 @@ export async function getSiteSeo(): Promise<SiteSeo> {
 export async function updateSiteSeo(data: Partial<SiteSeo>) {
   const payload = await getPayload({ config })
   return payload.updateGlobal({ slug: 'site-seo', data })
+}
+
+// ---- Media (for image-picker selects in Pages/Posts forms) ----
+
+export type MediaOption = { id: string; label: string }
+
+export async function getMediaOptions(): Promise<MediaOption[]> {
+  const payload = await getPayload({ config })
+  const result = await payload.find({
+    collection: 'media',
+    limit: 200,
+    sort: '-updatedAt',
+  })
+  return result.docs.map((doc) => ({
+    id: String(doc.id),
+    label: doc.alt || doc.filename || String(doc.id),
+  }))
 }
 
 // ---- CMS zone overview (/admin/content) ----

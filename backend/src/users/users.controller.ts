@@ -7,10 +7,14 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
+import { Roles } from '../common/decorators/roles.decorator';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersService } from './users.service';
 
+// Managing admin accounts (list/create/update/delete/promote) is
+// SUPER_ADMIN-only, per the developer's explicit requirement.
+@Roles('SUPER_ADMIN')
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}

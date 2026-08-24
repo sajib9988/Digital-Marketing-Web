@@ -9,6 +9,7 @@ const safeUserSelect = {
   id: true,
   name: true,
   email: true,
+  role: true,
   emailVerified: true,
   createdAt: true,
   updatedAt: true,
@@ -49,6 +50,7 @@ export class UsersService {
         name: dto.name,
         email: dto.email,
         password: await hashPassword(dto.password),
+        ...(dto.role !== undefined && { role: dto.role }),
       },
       select: safeUserSelect,
     });
@@ -62,6 +64,7 @@ export class UsersService {
       data: {
         ...(dto.name !== undefined && { name: dto.name }),
         ...(dto.email !== undefined && { email: dto.email }),
+        ...(dto.role !== undefined && { role: dto.role }),
         ...(dto.password !== undefined && {
           password: await hashPassword(dto.password),
         }),

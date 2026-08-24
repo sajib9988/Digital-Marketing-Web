@@ -15,3 +15,13 @@ enum ContactStatus {
   REPLIED
   ARCHIVED
 }
+
+// Explicitly requested by the developer, overriding CLAUDE.md section 16's
+// default "no UserRole enum" — public registration creates USER accounts;
+// only a SUPER_ADMIN can promote a USER to ADMIN; only ADMIN/SUPER_ADMIN can
+// reach the admin dashboard.
+enum UserRole {
+  SUPER_ADMIN
+  ADMIN
+  USER
+}

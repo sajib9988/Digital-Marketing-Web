@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers'
 
 export const ACCESS_TOKEN_COOKIE = 'accessToken'
+export const REFRESH_TOKEN_COOKIE = 'refreshToken'
 
 // Server-only helper — reads the admin session token from this app's own
 // cookie jar (set at login) and forwards it as a Bearer token to NestJS.

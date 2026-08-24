@@ -10,8 +10,9 @@ import type { Request } from 'express';
 import { IS_PUBLIC_KEY } from '../decorators/public.decorator';
 import type { AuthTokenPayload } from '../types/auth-token-payload';
 
-// Applied globally (see app.module.ts APP_GUARD provider). Reads the admin
-// session cookie set by AuthService.login and verifies it against JWT_SECRET.
+// Applied globally (see app.module.ts APP_GUARD provider). Stateless Bearer
+// auth — expects `Authorization: Bearer <token>`, set by the Admin app from
+// its own accessToken cookie. This API never sets or reads cookies itself.
 // Routes marked with @Public() (currently just POST /auth/login) skip this.
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
@@ -30,17 +31,28 @@ export class JwtAuthGuard implements CanActivate {
     }
 
     const request = context.switchToHttp().getRequest<Request>();
-    const token = request.cookies?.admin_token as string | undefined;
+    const token = extractBearerToken(request.headers.authorization);
 
     if (!token) {
       throw new UnauthorizedException('Not authenticated');
     }
 
     try {
-      request.user = this.jwtService.verify<AuthTokenPayload>(token);
+      const payload = this.jwtService.verify<AuthTokenPayload>(token);
+      if (payload.purpose !== 'access') {
+        throw new UnauthorizedException('Wrong token type');
+      }
+      request.user = payload;
       return true;
     } catch {
       throw new UnauthorizedException('Session expired or invalid');
     }
   }
+}
+
+function extractBearerToken(header: string | undefined): string | undefined {
+  if (!header?.startsWith('Bearer ')) {
+    return undefined;
+  }
+  return header.slice('Bearer '.length);
 }
