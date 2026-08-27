@@ -1,0 +1,16 @@
+{
+  "name": "digital-marketing-platform",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -n API,ADMIN,WEB -c blue,magenta,green \"pnpm --dir backend run start:dev\" \"pnpm --dir Admin-client run dev\" \"pnpm --dir public-client run dev\"",
+    "dev:api": "pnpm --dir backend run start:dev",
+    "dev:admin": "pnpm --dir Admin-client run dev",
+    "dev:web": "pnpm --dir public-client run dev",
+    "build": "concurrently -n API,ADMIN,WEB \"pnpm --dir backend run build\" \"pnpm --dir Admin-client run build\" \"pnpm --dir public-client run build\"",
+    "install:all": "pnpm --dir backend install && pnpm --dir Admin-client install && pnpm --dir public-client install"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  },
+  "packageManager": "pnpm@11.8.0"
+}

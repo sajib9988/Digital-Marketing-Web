@@ -24,3 +24,39 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Dual-direction services marquee — one row scrolls left-to-right, the
+   other right-to-left. Content is duplicated in the markup so each loop is
+   seamless (translating exactly -50%, i.e. one full copy, resets to 0). */
+@keyframes marquee-rtl {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-ltr {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+.animate-marquee-rtl {
+  animation: marquee-rtl 32s linear infinite;
+}
+
+.animate-marquee-ltr {
+  animation: marquee-ltr 32s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee-rtl,
+  .animate-marquee-ltr {
+    animation: none;
+  }
+}

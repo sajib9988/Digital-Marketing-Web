@@ -1,0 +1,4 @@
+# Root orchestrator's own node_modules (concurrently). Each app
+# (backend/Admin-client/public-client) manages its own node_modules and has
+# its own .gitignore — this only covers the root package.json.
+node_modules

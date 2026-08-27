@@ -7,6 +7,12 @@ import { PrismaModule } from './prisma/prisma.module';
 import { EmailModule } from './email/email.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { ServicesModule } from './services/services.module';
+import { ProjectsModule } from './projects/projects.module';
+import { ClientsModule } from './clients/clients.module';
+import { TestimonialsModule } from './testimonials/testimonials.module';
+import { ContactsModule } from './contacts/contacts.module';
+import { HealthModule } from './health/health.module';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
 import { RolesGuard } from './common/guards/roles.guard';
 
@@ -17,6 +23,12 @@ import { RolesGuard } from './common/guards/roles.guard';
     EmailModule,
     AuthModule,
     UsersModule,
+    ServicesModule,
+    ProjectsModule,
+    ClientsModule,
+    TestimonialsModule,
+    ContactsModule,
+    HealthModule,
   ],
   controllers: [AppController],
   providers: [
