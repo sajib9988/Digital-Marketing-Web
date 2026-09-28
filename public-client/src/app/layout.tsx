@@ -40,7 +40,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col">
+      <body suppressHydrationWarning className="flex min-h-full flex-col">
         <Navbar items={navigation.items ?? []} />
         <main className="flex flex-1 flex-col">{children}</main>
         <Footer />
